@@ -23,12 +23,16 @@ public class DynamicIntArray {
     }
 
     public void add(int number) {
+        handleIfArrayIsFull();
+        this.data[this.size] = number;
+        this.size += 1;
+    }
+
+    private void handleIfArrayIsFull() {
         if (this.size + 1 == this.capacity) {
             this.capacity += DEFAULT_CAPACITY;
             this.data = Arrays.copyOf(this.data, this.capacity);
         }
-        this.data[this.size] = number;
-        this.size += 1;
     }
 
     public void removeObject(int object) {
@@ -51,7 +55,20 @@ public class DynamicIntArray {
             this.data = array.data;
             this.size = array.size;
         }
+    }
 
+    public void insert(int index, int value) {
+        if (index < 0) throw new ArrayIndexOutOfBoundsException();
+        if (index >= this.size) {
+            this.add(value);
+        } else {
+            handleIfArrayIsFull();
+            for (int i = this.size - 1; i >= index; i--) {
+                this.data[i + 1] = this.data[i];
+            }
+            this.data[index] = value;
+            this.size += 1;
+        }
     }
 
     public String toString() {
