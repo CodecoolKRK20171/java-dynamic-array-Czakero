@@ -31,9 +31,33 @@ public class DynamicIntArray {
         this.size += 1;
     }
 
+    public void removeObject(int object) {
+        long removedItems = Arrays.stream(this.data).filter(e -> e == object).count();
+        this.data = Arrays.stream(this.data).filter(e -> !(e == object)).toArray();
+        this.size -= removedItems;
+
+    }
+
+    public void remove(int index) {
+        if (index < 0 || index >= size) {
+            throw new ArrayIndexOutOfBoundsException();
+        } else {
+            DynamicIntArray array = new DynamicIntArray();
+            for (int i = 0; i < this.size; i++) {
+                if (i != index) {
+                    array.add(this.data[i]);
+                }
+            }
+            this.data = array.data;
+            this.size = array.size;
+        }
+
+    }
+
     public String toString() {
+        System.out.println("Size: " + this.size + " Capacity: " + this.capacity + " Length: " + this.data.length);
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < this.size; i++) {
             sb.append(" ");
             sb.append(this.data[i]);
         }
