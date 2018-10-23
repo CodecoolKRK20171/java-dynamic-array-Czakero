@@ -26,12 +26,68 @@ class DynamicIntArrayTests {
         assertEquals(result, array.toString());
     }
 
+    @Test
+    public void testRemovingZero() {
+        DynamicIntArray array = getFullArray();
+        String result = " 1 2 3 4 5 6 7 8 9";
+
+        array.remove(0);
+
+        assertEquals(result, array.toString());
+    }
+
+    @Test
+    public void testRemovingNumber() {
+        DynamicIntArray array = getFullArray();
+        String result = " 0 1 2 3 4 6 7 8 9";
+
+        array.remove(5);
+
+        assertEquals(result, array.toString());
+    }
+
+    @Test
+    public void testRemovingNumberWhichOccursMoreThanOnce() {
+        DynamicIntArray array = getArrayWithMultpiliedValue();
+        String result = " 0 0 1 1 2 2 3 3 4 4 6 6 7 7 8 8 9 9";
+
+        array.removeObject(5);
+
+        assertEquals(result, array.toString());
+    }
+
+    @Test
+    public void testWhenRemovingWithIndexOutOfRangeShouldThrowException() {
+        DynamicIntArray array = getFullArray();
+
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> array.remove(10));
+    }
+
+    @Test
+    public void testWhenRemovingWithIndexOutOfRangeShouldThrowException2() {
+        DynamicIntArray array = getFullArray();
+
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> array.remove(-1));
+    }
+
     private DynamicIntArray getFullArray() {
         DynamicIntArray array = new DynamicIntArray();
 
         for (int i = 0; i < 10; i++) {
             array.add(i);
         }
+        return array;
+    }
+
+    private DynamicIntArray getArrayWithMultpiliedValue() {
+        DynamicIntArray array = new DynamicIntArray();
+
+        for (int i = 0; i < 10; i++) {
+            array.add(i);
+            array.add(i);
+        }
+        array.add(5);
+
         return array;
     }
 
