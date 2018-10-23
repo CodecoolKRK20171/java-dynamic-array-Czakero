@@ -70,12 +70,40 @@ class DynamicIntArrayTests {
         assertThrows(ArrayIndexOutOfBoundsException.class, () -> array.remove(-1));
     }
 
+    @Test
+    public void testInsertingOnIndexLesserThan0() {
+        DynamicIntArray array = getFullArray();
+
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> array.insert(-1, 2));
+    }
+
+    @Test
+    public void testCorrectInsertingNumber() {
+        DynamicIntArray array = getFullArray();
+        String result = " 0 1 2 3 6 4 5 6 7 8 9";
+
+        array.insert(4, 6);
+
+        assertEquals(result, array.toString());
+    }
+
+    @Test
+    public void testInsertingNumberWithIndexOutOfRange() {
+        DynamicIntArray array = getFullArray();
+        String result = " 0 1 2 3 4 5 6 7 8 9 423";
+
+        array.insert(5453, 423);
+
+        assertEquals(result, array.toString());
+    }
+
     private DynamicIntArray getFullArray() {
         DynamicIntArray array = new DynamicIntArray();
 
         for (int i = 0; i < 10; i++) {
             array.add(i);
         }
+        System.out.println(array.toString());
         return array;
     }
 
